@@ -69,7 +69,7 @@ class Bounce < Gosu::Window
 
 
 end
-
+ h
 class Paddle
   WIDTH = 100
   def initialize()

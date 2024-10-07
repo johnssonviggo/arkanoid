@@ -8,8 +8,8 @@ class Ball
     @image = Gosu::Image.new("./img/item__66.png")
     @x = 500
     @y = 500
-    @vel_x = [-3, 3].sample
-    @vel_y = [-3, 3].sample
+    @vel_x = [-4, 4].sample
+    @vel_y = [-4, 4].sample
     @width = 53
     @height = 53
   end
@@ -41,7 +41,8 @@ class Bounce < Gosu::Window
   def initialize
     super 1200, 900
     self.caption = "Arkanoid!"
-    @balls = 2.times.map {|| Ball.new}
+    # @balls = 2.times.map {|| Ball.new}
+    @ball = Ball.new
     @player = Paddle.new
   end
 
@@ -49,18 +50,22 @@ class Bounce < Gosu::Window
     @player.move_left if button_down?(Gosu::KB_LEFT)
     @player.move_right if button_down?(Gosu::KB_RIGHT)
 
-    @balls.each {|ball| ball.update}
+    @ball.update
+      if @player.hit_by?(@ball)  # Om bollen träffar paddeln
+        @ball.bounce_off_paddle
+      end
 
-    @balls.each do |ball|
-      ball.update
-       if @player.hit_by?(ball)  # Om bollen träffar paddeln
-         ball.bounce_off_paddle
-       end
-    end
+
+
+
+
+    # @balls.each {|ball| ball.update}
+    # @balls.each do |ball|
   end
 
   def draw
-    @balls.each {|ball| ball.draw}
+    # @balls.each {|ball| ball.draw}
+    @ball.draw
     @player.draw
 
 
